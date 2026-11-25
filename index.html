@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kokoro 7M WebGPU</title>
+<meta name="description" content="Kokoro-7M-Distill text-to-speech running fully in your browser on WebGPU.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div class="title">
+      <h1>Kokoro 7M <span class="seal">WebGPU</span></h1>
+      <p class="sub">Text-to-speech from <a href="https://huggingface.co/oddadmix/Kokoro-7M-Distill" target="_blank" rel="noopener">oddadmix/Kokoro-7M-Distill</a>, 7.5M parameters, running entirely in this tab.</p>
+    </div>
+    <div class="status" id="status"><span class="dot" id="dot"></span><span id="statusText">Starting…</span></div>
+  </header>
+
+  <section class="progress" id="progress" hidden></section>
+
+  <section class="panel">
+    <textarea id="text" rows="5" spellcheck="false">Kokoro seven M is a tiny text to speech model. It runs right here in your browser, on your own graphics card, with no server in the loop.</textarea>
+    <div class="examples" id="examples"></div>
+    <div class="controls">
+      <label class="field">
+        <span>Voice</span>
+        <select id="voice"></select>
+      </label>
+      <label class="field speed">
+        <span>Speed <b id="speedVal">1.00×</b></span>
+        <input id="speed" type="range" min="0.6" max="1.6" step="0.05" value="1">
+      </label>
+      <button id="go" class="primary" disabled>Speak</button>
+    </div>
+    <div id="voiceNote" class="note"></div>
+  </section>
+
+  <section class="panel out" id="outPanel" hidden>
+    <div class="row-head"><span class="tag">Kokoro-7M-Distill</span><span class="stats" id="stats7"></span></div>
+    <audio id="audio7" controls></audio>
+    <div class="row-head cmp" id="cmpHead" hidden><span class="tag alt">Kokoro-82M</span><span class="stats" id="stats82"></span></div>
+    <audio id="audio82" controls hidden></audio>
+    <details class="ph"><summary>Phonemes</summary><code id="phon"></code></details>
+  </section>
+
+  <section class="panel compare">
+    <div>
+      <b>Compare with the 82M teacher</b>
+      <p>Same text, same phonemes, run through <a href="https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX" target="_blank" rel="noopener">Kokoro-82M</a> (<span id="cmpSize">92 MB</span> int8 on WASM, 11× larger) using af_heart, or the selected Kokoro voice.</p>
+    </div>
+    <button id="cmp" disabled>Load 82M &amp; compare</button>
+  </section>
+
+  <footer>
+    <span>Front-end: a JS port of <a href="https://github.com/hexgrad/misaki" target="_blank" rel="noopener">misaki</a> G2P, espeak-ng for unknown words. ONNX: <a href="https://huggingface.co/mrfakename/Kokoro-7M-Distill-ONNX" target="_blank" rel="noopener">mrfakename/Kokoro-7M-Distill-ONNX</a>.</span>
+    <a href="https://x.com/realmrfakename" target="_blank" rel="noopener">@realmrfakename</a>
+  </footer>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
